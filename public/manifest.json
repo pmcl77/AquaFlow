@@ -1,8 +1,9 @@
+
 {
   "name": "AquaFlow Intake Tracker",
   "short_name": "AquaFlow",
   "description": "Streamlined liquid intake and urination tracker.",
-  "start_url": "index.html",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#2563eb",
   "theme_color": "#2563eb",
