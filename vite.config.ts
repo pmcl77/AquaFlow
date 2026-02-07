@@ -3,9 +3,10 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: './', // This ensures all assets use relative paths, essential for GitHub Pages
+  base: '/AquaFlow/', 
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    emptyOutDir: true
   }
 });
