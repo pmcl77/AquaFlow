@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { format, isWithinInterval, endOfDay, eachDayOfInterval, addDays } from 'date-fns';
 import { Milk as Bottle, Beaker, FileText, Filter, TrendingUp, Activity, Clock, Printer, FileDown, BarChart3, AlertCircle, Hash, Info, StickyNote } from 'lucide-react';
@@ -287,7 +286,7 @@ const ReportView: React.FC<ReportViewProps> = ({ entries, settings, onEditEntry,
                             )}
                           </div>
                           {e.urgency && e.urgency !== Urgency.EMPTY && (
-                            <AlertCircle size={12} className={`ml-1 ${getUrgencyColor(e.urgency)}`} title={`Urgency: ${e.urgency}`} />
+                            <AlertCircle size={12} className={`ml-1 ${getUrgencyColor(e.urgency)}`} />
                           )}
                         </div>
                       </td>
