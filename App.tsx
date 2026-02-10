@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { 
   Milk as Bottle, 
@@ -167,13 +166,9 @@ const App: React.FC = () => {
     // Headers without ID
     const headers = ['Type', 'Intake Type', 'Amount (ml)', 'Timestamp', 'Notes'];
     const rows = dataToExport.map(e => {
-      // Return empty string instead of '—' or 'None' label if it's not applicable
       const intakeType = settings.intakeCategories.find(c => c.id === e.intakeTypeId);
       const intakeTypeLabel = (intakeType && intakeType.id !== 'none') ? intakeType.label : '';
-      
       const displayType = e.type === EntryType.WATER ? 'Intake' : e.type === EntryType.URINE ? 'Urine' : 'Note';
-      
-      // Amount should be empty for Notes
       const displayAmount = e.type === EntryType.NOTE ? '' : e.amount.toString();
       
       return [
@@ -197,8 +192,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen max-w-md mx-auto bg-white dark:bg-slate-900 shadow-xl relative overflow-hidden transition-colors">
-      <header className="bg-blue-600 dark:bg-blue-800 text-white p-4 pt-6 shadow-md z-10 transition-colors print:hidden">
+    <div className="flex flex-col h-full max-w-md mx-auto bg-white dark:bg-slate-900 shadow-xl relative overflow-hidden transition-colors">
+      <header className="bg-blue-600 dark:bg-blue-800 text-white p-4 pt-6 shadow-md z-10 transition-colors shrink-0 print:hidden">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             {currentView !== 'HOME' && (
@@ -254,7 +249,7 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-2 flex justify-around items-center shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-20 transition-colors print:hidden">
+      <nav className="absolute bottom-0 left-0 right-0 max-w-md mx-auto bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-2 flex justify-around items-center shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-20 transition-colors print:hidden">
         <NavButton 
           active={currentView === 'HOME'} 
           onClick={() => setCurrentView('HOME')} 
