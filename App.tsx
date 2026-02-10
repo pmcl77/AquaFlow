@@ -193,20 +193,20 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full max-w-md mx-auto bg-white dark:bg-slate-900 shadow-xl relative overflow-hidden transition-colors">
-      <header className="bg-blue-600 dark:bg-blue-800 text-white p-4 pt-6 shadow-md z-10 transition-colors shrink-0 print:hidden">
+      <header className="bg-blue-600 dark:bg-blue-800 text-white px-4 py-2 pt-4 shadow-md z-10 transition-colors shrink-0 print:hidden">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             {currentView !== 'HOME' && (
               <button onClick={() => setCurrentView('HOME')} className="p-1 -ml-1 hover:bg-blue-700 dark:hover:bg-blue-700 rounded-full transition-colors">
-                <ChevronLeft size={24} />
+                <ChevronLeft size={20} />
               </button>
             )}
-            <h1 className="text-xl font-bold tracking-tight">AquaFlow</h1>
+            <h1 className="text-lg font-bold tracking-tight">AquaFlow</h1>
           </div>
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto pb-24 px-4 pt-4 bg-slate-50 dark:bg-slate-950 no-scrollbar transition-colors print:p-0 print:bg-white print:dark:bg-white print:overflow-visible print:pb-0">
+      <main className="flex-1 overflow-y-auto pb-24 px-4 pt-3 bg-slate-50 dark:bg-slate-950 no-scrollbar transition-colors print:p-0 print:bg-white print:dark:bg-white print:overflow-visible print:pb-0">
         {currentView === 'HOME' && (
           <Dashboard 
             entries={entries} 
@@ -253,31 +253,31 @@ const App: React.FC = () => {
         <NavButton 
           active={currentView === 'HOME'} 
           onClick={() => setCurrentView('HOME')} 
-          icon={<Bottle size={24} />} 
+          icon={<Bottle size={22} />} 
           label="Track" 
         />
         <NavButton 
           active={currentView === 'CALENDAR'} 
           onClick={() => setCurrentView('CALENDAR')} 
-          icon={<CalendarDays size={24} />} 
+          icon={<CalendarDays size={22} />} 
           label="Calendar" 
         />
         <NavButton 
           active={currentView === 'REPORT'} 
           onClick={() => setCurrentView('REPORT')} 
-          icon={<Calendar size={24} />} 
+          icon={<Calendar size={22} />} 
           label="Reports" 
         />
         <NavButton 
           active={currentView === 'INSIGHTS'} 
           onClick={() => setCurrentView('INSIGHTS')} 
-          icon={<Sparkles size={24} />} 
+          icon={<Sparkles size={22} />} 
           label="AI Insights" 
         />
         <NavButton 
           active={currentView === 'SETTINGS'} 
           onClick={() => setCurrentView('SETTINGS')} 
-          icon={<SettingsIcon size={24} />} 
+          icon={<SettingsIcon size={22} />} 
           label="Settings" 
         />
       </nav>
@@ -305,12 +305,12 @@ interface NavButtonProps {
 const NavButton: React.FC<NavButtonProps> = ({ active, onClick, icon, label }) => (
   <button 
     onClick={onClick}
-    className={`flex flex-col items-center gap-1 p-2 transition-all duration-200 ${
-      active ? 'text-blue-600 dark:text-blue-400 scale-110 font-semibold' : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'
+    className={`flex flex-col items-center gap-1 p-1.5 transition-all duration-200 ${
+      active ? 'text-blue-600 dark:text-blue-400 scale-105 font-semibold' : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'
     }`}
   >
     {icon}
-    <span className="text-[10px] uppercase tracking-wider">{label}</span>
+    <span className="text-[9px] uppercase tracking-wider">{label}</span>
   </button>
 );
 
