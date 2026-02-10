@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aquaflow-v3';
+const CACHE_NAME = 'aquaflow-v4';
 const ASSETS = [
   './index.html',
   './manifest.json',
@@ -8,7 +8,7 @@ const ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS).catch(err => console.error('Failed to cache assets during install:', err));
+      return cache.addAll(ASSETS).catch(err => console.error('Install Cache Error:', err));
     })
   );
   self.skipWaiting();
@@ -26,12 +26,16 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Simple network-first strategy for the app, cache-first for known static assets
-  if (event.request.mode === 'navigate' || event.request.url.includes('index.tsx')) {
+  const url = new URL(event.request.url);
+  
+  // Strategy: Network First for index.tsx and index.html to avoid "Old Code" white screens
+  if (event.request.mode === 'navigate' || url.pathname.includes('index.tsx')) {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match('./index.html'))
+      fetch(event.request)
+        .catch(() => caches.match(event.request) || caches.match('./index.html'))
     );
   } else {
+    // Strategy: Cache First for assets like Tailwind or Manifest
     event.respondWith(
       caches.match(event.request).then((response) => {
         return response || fetch(event.request);

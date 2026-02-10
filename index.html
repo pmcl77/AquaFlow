@@ -11,90 +11,83 @@
     <link rel="manifest" href="./manifest.json">
     <title>AquaFlow</title>
     
-    <script>
-        // Global error logger to help debug mobile issues
-        window.onerror = function(msg, url, lineNo, columnNo, error) {
-            console.error('Global Error:', msg, 'at', url, ':', lineNo);
-            // Alert on mobile for easier visibility of boot errors
-            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                // alert('Boot Error: ' + msg + '\nLine: ' + lineNo);
-            }
-            return false;
-        };
-        window.onunhandledrejection = function(event) {
-            console.error('Unhandled Rejection:', event.reason);
-        };
-    </script>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Shim for environment variables used in the code
-        window.process = {
-            env: {
-                API_KEY: "" 
-            }
-        };
-
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                },
-            },
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #f8fafc;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            width: 100%;
-            touch-action: manipulation;
-        }
-        #root {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch; 
-        }
-    </style>
-<script type="importmap">
+    <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "date-fns": "https://esm.sh/date-fns@^4.1.0",
-    "recharts": "https://esm.sh/recharts@^3.7.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom/": "https://esm.sh/react-dom@19.0.0/",
+    "react/": "https://esm.sh/react@19.0.0/",
+    "lucide-react": "https://esm.sh/lucide-react@0.468.0",
+    "date-fns": "https://esm.sh/date-fns@4.1.0",
+    "recharts": "https://esm.sh/recharts@2.15.0",
+    "@google/genai": "https://esm.sh/@google/genai@1.40.0",
     "vite": "https://esm.sh/vite@^7.3.1",
     "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.4"
   }
 }
 </script>
+
+    <script>
+        // Visual Error Logger for Mobile Debugging
+        window.onerror = function(msg, url, line, col, error) {
+            const debug = document.getElementById('debug-overlay');
+            if (debug) {
+                debug.style.display = 'block';
+                debug.innerHTML += `<div style="border-bottom:1px solid #ff000033; padding:5px;">
+                    <strong>Error:</strong> ${msg}<br>
+                    <small>${url}:${line}:${col}</small>
+                </div>`;
+            }
+            return false;
+        };
+        window.onunhandledrejection = function(event) {
+            console.error('Unhandled Rejection:', event.reason);
+            const debug = document.getElementById('debug-overlay');
+            if (debug) {
+                debug.style.display = 'block';
+                debug.innerHTML += `<div style="color: #ff9800; padding:5px;"><strong>Rejection:</strong> ${event.reason}</div>`;
+            }
+        };
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.process = { env: { API_KEY: "" } };
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; background-color: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; width: 100%; touch-action: manipulation; }
+        #root { height: 100%; width: 100%; overflow: hidden; display: flex; flex-direction: column; }
+        #debug-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: #fff0f0;
+            color: #d00;
+            font-family: monospace;
+            font-size: 10px;
+            z-index: 9999;
+            max-height: 30%;
+            overflow-y: auto;
+            padding: 10px;
+            border-bottom: 2px solid #d00;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
-    <div id="root"></div>
+    <div id="debug-overlay"><strong>BOOT LOG:</strong><br></div>
+    <div id="root">
+        <div style="height:100%; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:14px;">
+            Initializing AquaFlow...
+        </div>
+    </div>
     <script type="module" src="./index.tsx"></script>
 </body>
 </html>
